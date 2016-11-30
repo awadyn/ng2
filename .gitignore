@@ -1,4 +1,10 @@
 node_modules/
 *.log
-*.js
-*.js.map
+app/*.js
+app/dashboard/*.js
+app/dashboard/admin/*.js
+app/dashboard/admin/studio-users/*.js
+app/*.js.map
+app/dashboard/*.js.map
+app/dashboard/admin/*.js.map
+app/dashboard/admin/studio-users/*.js.map
