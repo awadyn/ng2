@@ -14,9 +14,7 @@
         <div>
 <!--            <label>Search: </label><input #org_name type="text" value="" (keyup)="searchOrganizations(org_name.value)">
 -->            <ul>
-<!--                    <li *ngFor = "let organization of search_results | async">
--->
-                    <li *ngFor = "let organization of organizations">
+                    <li *ngFor = "let organization of store.organizations | async">
                         <div><label>Name: </label>{{organization.name}}</div>
                         <div><label>Type: </label>{{organization.type}}</div>
                         <div><label>Package: </label>{{organization.package}}</div>

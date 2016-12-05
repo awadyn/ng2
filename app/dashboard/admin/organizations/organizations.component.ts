@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 
 import { Organization } from 'app/organization';
 
-import { OrganizationsService } from './organizations.service';
+import { OrganizationsStore } from './organizationsStore';
 
 
 
@@ -15,6 +15,10 @@ import { OrganizationsService } from './organizations.service';
 
 
 
+/*
+ *  smart component
+ *  manage component state locally
+ */
 export class OrganizationsComponent implements OnInit, AfterViewInit {
     /* STATE */
     organizations: Organization[];
@@ -22,30 +26,25 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
 
     /**
      *  @constructor
+     *  @param service: observable data service
      */
-    constructor(private router: Router, private service: OrganizationsService) {
+    constructor(private router: Router, private store: OrganizationsStore) {
     }
 
-
-    /*
-     * Get organizations in one chunk
-     * */
-    getOrganizations(): void {
-        this.service
-            .getOrganizations()
-            .then(ORGS => this.organizations = ORGS);
-    }
 
     /*
      *  Get organizations as stream
      */
-    getOrganizationsAsStream(): void {
-        this.service
-            .getOrganizationsAsStream()                         // COLD
-            .map(response => this.organizations = response)     // STILL COLD
-            .subscribe();                                       // THIS IS WHY I'M HOT... THIS IS WHY I'M HOT
+//    getOrganizationsAsStream(): void {
+//        this.service
+//            .getOrganizationsAsStream()                         // COLD
+//            .map(response => this.organizations = response)     // STILL COLD
+//            .subscribe(
+//                res => {console.log(res)},
+//                err => {this.service.handleError()}
+//            );                                       // THIS IS WHY I'M HOT... THIS IS WHY I'M HOT
                                                                 // THIS IS WHY.. THIS IS WHY.. THIS IS WHY I'M HOT
-    }
+//    }
     
 
     addOrganization(org_name:string, org_type:string, org_package:string): void {
@@ -83,8 +82,6 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         console.log('finished initializing component...');
-//        this.getOrganizations();
-        this.getOrganizationsAsStream();
     }
 
 

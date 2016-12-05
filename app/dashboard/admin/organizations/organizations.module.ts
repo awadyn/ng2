@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { OrganizationsComponent } from './organizations.component';
 
-import { OrganizationsService } from './organizations.service';
+import { OrganizationsBackendService } from './organizationsBackend.service';
+import { OrganizationsStore } from './organizationsStore';
 
 import { OrganizationsRoutingModule } from './organizations-routing.module';
 
@@ -22,7 +23,8 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
         OrganizationsComponent
     ],
     providers: [
-        OrganizationsService
+        OrganizationsBackendService,
+        OrganizationsStore
     ]
 })
 
