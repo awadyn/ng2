@@ -17,7 +17,7 @@ export class OrganizationsService {
     constructor(private http: Http) { }
 
     /*
-     *  fetch organizations from mock db
+     *  fetch organizations as a chunk from mock db
      */
     getOrganizations(): Promise<Organization[]> {
         return this.http.get(this.orgsUrl)
@@ -26,6 +26,14 @@ export class OrganizationsService {
                    .catch(this.handleError);
     }
 
+    /*
+     *  fetch organizations as a stream from mock db
+     */
+    getOrganizationsAsStream(): Observable<Organization[]> {
+        return this.http.get(this.orgsUrl)
+                   .map(response => response = response.json().data)
+                   .catch(this.handleError);
+    }
 
     /*
      *  handle errors from http requests

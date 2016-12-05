@@ -36,6 +36,17 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
             .then(ORGS => this.organizations = ORGS);
     }
 
+    /*
+     *  Get organizations as stream
+     */
+    getOrganizationsAsStream(): void {
+        this.service
+            .getOrganizationsAsStream()                         // COLD
+            .map(response => this.organizations = response)     // STILL COLD
+            .subscribe();                                       // THIS IS WHY I'M HOT... THIS IS WHY I'M HOT
+                                                                // THIS IS WHY.. THIS IS WHY.. THIS IS WHY I'M HOT
+    }
+    
 
     addOrganization(org_name:string, org_type:string, org_package:string): void {
         if (org_name && org_type && org_package) {
@@ -72,7 +83,8 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         console.log('finished initializing component...');
-        this.getOrganizations();
+//        this.getOrganizations();
+        this.getOrganizationsAsStream();
     }
 
 
