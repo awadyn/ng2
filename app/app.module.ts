@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-//import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -21,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AdminModule } from './dashboard/admin/admin.module';
 import { StudioUsersModule } from './dashboard/admin/studio-users/studio-users.module';
-
+import { OrganizationsModule } from './dashboard/admin/organizations/organizations.module';
 
 @NgModule({
     imports: [
@@ -32,7 +31,7 @@ import { StudioUsersModule } from './dashboard/admin/studio-users/studio-users.m
             DashboardModule,
             AdminModule,
             StudioUsersModule,
-//            Ng2SmartTableModule,
+            OrganizationsModule,
             AppRoutingModule
     ],
     declarations: [

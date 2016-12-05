@@ -11,6 +11,12 @@ export class InMemoryDataService implements InMemoryDbService {
             {first_name: 'Antonio', last_name: 'Nehme', role: 'ILI', email: 'anehme@interactivelife.com', password: 'somepassword', pin: 123456, id: 2},
             {first_name: 'Adnan', last_name: 'Utayyim', role: 'ILI', email: 'mmu00@mail.aub.edu', password: 'somepassword', pin: 1234567, id: 3}
         ];
-        return {users};
+        let orgs = [
+            {name: 'AlSumaria', type: 'Media', package: undefined, id: 1},
+            {name: 'Administrate', type: 'Education', package: undefined, id: 2},
+            {name: 'BDD', type: 'Other', package: undefined, id: 3},
+            {name: 'Elation', type: 'Other', package: 'Gold', id: 4}
+        ];
+        return {users, orgs};
     }
 }
