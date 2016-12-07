@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { OrganizationsComponent } from './organizations.component';
+import { OrganizationDetailComponent } from './organization-detail.component';
 
 import { OrganizationsBackendService } from './organizationsBackend.service';
 import { OrganizationsStore } from './organizationsStore';
@@ -17,10 +18,12 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
         OrganizationsRoutingModule
     ],
     exports: [
-        OrganizationsComponent
+        OrganizationsComponent,
+        OrganizationDetailComponent
     ],
     declarations: [
-        OrganizationsComponent
+        OrganizationsComponent,
+        OrganizationDetailComponent
     ],
     providers: [
         OrganizationsBackendService,

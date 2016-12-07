@@ -26,9 +26,11 @@ export class OrganizationsStore {
 
     /* local state */
     private _organizations: BehaviorSubject<Organization[]> = new BehaviorSubject([]);
+    private _selected_organization: BehaviorSubject<Organization> = new BehaviorSubject(null);
     /* only expose observables to prevent store clients from emitting store values */
     public organizations: Observable<Organization[]> = this._organizations.asObservable();
-
+    public selected_organization: Observable<Organization> = this._selected_organization.asObservable();
+    
 
     /**
      * @constructor
@@ -39,6 +41,59 @@ export class OrganizationsStore {
     }
 
 
+    /**
+     *  @param org_name: name of organization to add
+     *  @param org_type: type of organization to add
+     *  @param org_package: package of organization to add
+     *  calls backend service addition function
+     *  updates local state
+     */
+    addOrganization(org_name: string, org_type: string, org_package: string) {
+        let obs = this.backendService.addOrganization(org_name, org_type, org_package)
+                      .map(response => response = response.json().data);
+        obs.subscribe(
+            result => {
+                console.log('Called backend add service');
+                this._organizations.getValue().push(result);
+                console.log('private local state: ', this._organizations);
+                console.log('publicly visible state: ', this.organizations);
+            },
+            error => {
+                console.log('Error adding organization...');
+            }
+        );
+    }
+
+    /**
+     *  @param id: id of organization to delete
+     *  calls backend service deletion function
+     *  updates local state
+     */
+    deleteOrganization(id: number) {
+        let obs = this.backendService.deleteOrganization(id);
+        obs.subscribe(
+            result => {
+                console.log('Called backend delete service');
+                let delete_id = this._organizations.getValue().findIndex((org) => org.id === id);
+                this._organizations.getValue().splice(delete_id, 1);
+//                this._organizations.next(this._organizations.getValue());
+                console.log('private local state: ', this._organizations);
+                console.log('publicly visible state: ', this.organizations);
+            },
+            error => {
+                console.log('Error deleting organization...');
+            }
+        );
+    }
+
+    /**
+     *  @param organization: selected organization
+     *  view details of organization
+     *  update local state
+     */
+    select(organization: Organization) {
+        this._selected_organization.next(organization);
+    }
 
     /**
      *  fetches initial array of organizations
@@ -50,15 +105,17 @@ export class OrganizationsStore {
         let obs = this.backendService.getOrganizations()
                       .map(response => response = response.json().data);
         obs.subscribe(
-            res => {
+            result => {
 //                console.log(res);
 //                console.log(<Organization>res[1]);
-                this._organizations.next(res);
+                this._organizations.next(result);
 //                console.log(this._organizations);
 //                console.log(this._organizations.getValue());
 //                console.log(this.organizations);
             },
-            err => console.log('Error fetching organizations...');
+            error => {
+                console.log('Error fetching organizations...');
+            }
         );
     }
 }

@@ -25,7 +25,34 @@ export class OrganizationsBackendService {
      *  fetch organizations as a stream from mock db
      */
     getOrganizations() {
-        return this.http.get(this.orgsUrl);
+        return this.http.get(this.orgsUrl)
+                   .catch(this.handleError);
+    }
+
+    /**
+     *  @param org_name: name of organization to add
+     *  @param org_type: type of organization to add
+     *  @param org_package: package of organization to add
+     *  adds organization to mock db
+     *  response body is object representation of added organization
+     *  new organization id set through auto-increment
+     */
+    addOrganization(org_name: string, org_type:string, org_package:string) {
+        return this.http
+                   .post(this.orgsUrl, JSON.stringify({name: org_name, type: org_type, package: org_package}), {headers:this.headers})
+                   .catch(this.handleError);
+    }
+
+    /**
+     *  @param id: id of organization to delete
+     *  deletes organization from mock db
+     *  response body is null => do not call json() on response
+     */
+    deleteOrganization(id: number) {
+        const url = `${this.orgsUrl}/${id}`;
+        return this.http
+                   .delete(url)
+                   .catch(this.handleError);
     }
 
     /*

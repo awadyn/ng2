@@ -20,10 +20,6 @@ import { OrganizationsStore } from './organizationsStore';
  *  manage component state locally
  */
 export class OrganizationsComponent implements OnInit, AfterViewInit {
-    /* STATE */
-    organizations: Organization[];
-
-
     /**
      *  @constructor
      *  @param service: observable data service
@@ -32,28 +28,13 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
     }
 
 
-    /*
-     *  Get organizations as stream
-     */
-//    getOrganizationsAsStream(): void {
-//        this.service
-//            .getOrganizationsAsStream()                         // COLD
-//            .map(response => this.organizations = response)     // STILL COLD
-//            .subscribe(
-//                res => {console.log(res)},
-//                err => {this.service.handleError()}
-//            );                                       // THIS IS WHY I'M HOT... THIS IS WHY I'M HOT
-                                                                // THIS IS WHY.. THIS IS WHY.. THIS IS WHY I'M HOT
-//    }
-    
-
     addOrganization(org_name:string, org_type:string, org_package:string): void {
         if (org_name && org_type && org_package) {
             org_name = org_name.trim();
             org_type = org_type.trim();
             org_package = org_package.trim();
-
-
+            console.log('Adding organization');
+            this.store.addOrganization(org_name, org_type, org_package);
         } else {
             console.log('Cannot add organization. Missing fields.'); 
             return;
@@ -62,6 +43,8 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
 
 
     deleteOrganization(id: number): void {
+        console.log('Deleting organization with id ', id);
+        this.store.deleteOrganization(id);
     }
 
 
@@ -84,6 +67,19 @@ export class OrganizationsComponent implements OnInit, AfterViewInit {
         console.log('finished initializing component...');
     }
 
+
+    /**
+     *
+     */
+    onSelect(organization?: Organization): void {
+        if (organization) {
+            console.log('Selected organization ', organization.name); 
+            this.store.select(organization);
+        } else {
+            console.log('No organization selected');
+            this.store.select(null);
+        }
+    }
 
     /**
      *  go back to admin view

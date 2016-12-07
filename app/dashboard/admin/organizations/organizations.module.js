@@ -12,7 +12,9 @@ var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var forms_1 = require('@angular/forms');
 var organizations_component_1 = require('./organizations.component');
-var organizations_service_1 = require('./organizations.service');
+var organization_detail_component_1 = require('./organization-detail.component');
+var organizationsBackend_service_1 = require('./organizationsBackend.service');
+var organizationsStore_1 = require('./organizationsStore');
 var organizations_routing_module_1 = require('./organizations-routing.module');
 var OrganizationsModule = (function () {
     function OrganizationsModule() {
@@ -25,13 +27,16 @@ var OrganizationsModule = (function () {
                 organizations_routing_module_1.OrganizationsRoutingModule
             ],
             exports: [
-                organizations_component_1.OrganizationsComponent
+                organizations_component_1.OrganizationsComponent,
+                organization_detail_component_1.OrganizationDetailComponent
             ],
             declarations: [
-                organizations_component_1.OrganizationsComponent
+                organizations_component_1.OrganizationsComponent,
+                organization_detail_component_1.OrganizationDetailComponent
             ],
             providers: [
-                organizations_service_1.OrganizationsService
+                organizationsBackend_service_1.OrganizationsBackendService,
+                organizationsStore_1.OrganizationsStore
             ]
         }), 
         __metadata('design:paramtypes', [])

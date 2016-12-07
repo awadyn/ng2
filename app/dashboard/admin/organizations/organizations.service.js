@@ -20,12 +20,20 @@ var OrganizationsService = (function () {
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     /*
-     *  fetch organizations from mock db
+     *  fetch organizations as a chunk from mock db
      */
     OrganizationsService.prototype.getOrganizations = function () {
         return this.http.get(this.orgsUrl)
             .toPromise()
             .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
+    /*
+     *  fetch organizations as a stream from mock db
+     */
+    OrganizationsService.prototype.getOrganizationsAsStream = function () {
+        return this.http.get(this.orgsUrl)
+            .map(function (response) { return response = response.json().data; })
             .catch(this.handleError);
     };
     /*

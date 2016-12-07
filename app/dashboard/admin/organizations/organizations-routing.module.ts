@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OrganizationsComponent } from './organizations.component';
+import { OrganizationDetailComponent } from './organization-detail.component';
 
 const organizationsRoutes: Routes = [
-    { path: "organizations", component: OrganizationsComponent }
+    { path: "organizations", component: OrganizationsComponent },
+    { path: "organization/:name", component: OrganizationDetailComponent}
 ];
 
 @NgModule({

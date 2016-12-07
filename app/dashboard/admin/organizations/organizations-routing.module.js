@@ -11,8 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var organizations_component_1 = require('./organizations.component');
+var organization_detail_component_1 = require('./organization-detail.component');
 var organizationsRoutes = [
-    { path: "organizations", component: organizations_component_1.OrganizationsComponent }
+    { path: "organizations", component: organizations_component_1.OrganizationsComponent },
+    { path: "organization/:name", component: organization_detail_component_1.OrganizationDetailComponent }
 ];
 var OrganizationsRoutingModule = (function () {
     function OrganizationsRoutingModule() {
