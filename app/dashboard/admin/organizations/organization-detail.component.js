@@ -22,6 +22,17 @@ var OrganizationDetailComponent = (function () {
         this.store = store;
         this.router = router;
     }
+    /**
+     *  save changes made to this organization in mock db
+     */
+    OrganizationDetailComponent.prototype.saveOrganization = function () {
+        if (this.organization) {
+            this.store.saveOrganization(this.organization);
+        }
+        else {
+            console.log('cannot update organization... organization is undefined or null');
+        }
+    };
     OrganizationDetailComponent.prototype.goBack = function () {
         this.organization = null;
         this.router.navigate(['/organizations']);

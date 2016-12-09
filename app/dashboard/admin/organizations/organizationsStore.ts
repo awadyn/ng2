@@ -29,7 +29,6 @@ export class OrganizationsStore {
     private _selected_organization: BehaviorSubject<Organization> = new BehaviorSubject(null);
     /* only expose observables to prevent store clients from emitting store values */
     public organizations: Observable<Organization[]> = this._organizations.asObservable();
-    public selected_organization: Observable<Organization> = this._selected_organization.asObservable();
     
 
     /**
@@ -76,12 +75,34 @@ export class OrganizationsStore {
                 console.log('Called backend delete service');
                 let delete_id = this._organizations.getValue().findIndex((org) => org.id === id);
                 this._organizations.getValue().splice(delete_id, 1);
+                if (this._selected_organization.getValue().id === id) {
+                    this._selected_organization.next(null);
+                }
 //                this._organizations.next(this._organizations.getValue());
                 console.log('private local state: ', this._organizations);
                 console.log('publicly visible state: ', this.organizations);
             },
             error => {
                 console.log('Error deleting organization...');
+            }
+        );
+    }
+
+    /**
+     *  @param organization: organization to save changes to
+     *  calls backend service saving function
+     *  local state is updated through two-way binding between model and view
+     */
+    saveOrganization(organization: Organization) {
+        let obs = this.backendService.saveOrganization(organization);
+        obs.subscribe(
+            result => {
+                console.log('Called backend save service');
+                console.log('private local state: ', this._organizations);
+                console.log('publicly visible state: ', this.organizations);
+            },
+            error => {
+                console.log('Error saving organization...');
             }
         );
     }

@@ -55,6 +55,23 @@ export class OrganizationsBackendService {
                    .catch(this.handleError);
     }
 
+    /**
+     *  @param organization: organization to save changes to
+     *  saves changes to organization in mock db
+     *  response body is null => do not call json() on response
+     */
+    saveOrganization(organization: Organization) {
+        if (organization) {
+            const url = `${this.orgsUrl}/${organization.id}`;
+            return this.http
+                .put(url, JSON.stringify(organization), {headers:this.headers})
+                .catch(this.handleError);
+        } else {
+            console.log('cannot save organization... organization undefined or null');
+            return;
+        } 
+    }
+
     /*
      *  handle errors from http requests
      */

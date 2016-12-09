@@ -26,6 +26,19 @@ export class OrganizationDetailComponent {
         private router: Router
     ) { }
 
+
+    /**
+     *  save changes made to this organization in mock db
+     */
+    saveOrganization(): void {
+        if (this.organization) {
+            this.store.saveOrganization(this.organization);
+        } else {
+            console.log('cannot update organization... organization is undefined or null');
+        }
+    }
+
+
     goBack(): void {
         this.organization = null;
         this.router.navigate(['/organizations']);

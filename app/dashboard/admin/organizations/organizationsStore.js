@@ -35,7 +35,6 @@ var OrganizationsStore = (function () {
         this._selected_organization = new Rx_1.BehaviorSubject(null);
         /* only expose observables to prevent store clients from emitting store values */
         this.organizations = this._organizations.asObservable();
-        this.selected_organization = this._selected_organization.asObservable();
         this.loadInitialOrganizations();
     }
     /**
@@ -70,11 +69,30 @@ var OrganizationsStore = (function () {
             console.log('Called backend delete service');
             var delete_id = _this._organizations.getValue().findIndex(function (org) { return org.id === id; });
             _this._organizations.getValue().splice(delete_id, 1);
+            if (_this._selected_organization.getValue().id === id) {
+                _this._selected_organization.next(null);
+            }
             //                this._organizations.next(this._organizations.getValue());
             console.log('private local state: ', _this._organizations);
             console.log('publicly visible state: ', _this.organizations);
         }, function (error) {
             console.log('Error deleting organization...');
+        });
+    };
+    /**
+     *  @param organization: organization to save changes to
+     *  calls backend service saving function
+     *  local state is updated through two-way binding between model and view
+     */
+    OrganizationsStore.prototype.saveOrganization = function (organization) {
+        var _this = this;
+        var obs = this.backendService.saveOrganization(organization);
+        obs.subscribe(function (result) {
+            console.log('Called backend save service');
+            console.log('private local state: ', _this._organizations);
+            console.log('publicly visible state: ', _this.organizations);
+        }, function (error) {
+            console.log('Error saving organization...');
         });
     };
     /**
