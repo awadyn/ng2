@@ -1,24 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import 'rxjs/add/operator/switchMap';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from 'app/user';
 
-import { StudioUsersService } from './studio-users.service';
+import { StudioUsersStore } from './studioUsersStore';
 
 /**
- *  decorator for user_detail component
+ *  user-detail component extends component
  */
 @Component({
     selector: 'user_detail',
     templateUrl: 'app/dashboard/admin/studio-users/user_detail.html'
 })
 
-/**
- *  defines any properties or methods that this component will be using
- *  @property user: user to edit
- */
+
 export class UserDetailComponent {
     @Input()
     user: User | null;
@@ -27,33 +22,25 @@ export class UserDetailComponent {
      *  @constructor
      */
     constructor(
-            private studio_users_service: StudioUsersService,
-            private user_detail_router: Router,
-            private user_detail_route: ActivatedRoute
+            private router: Router,
+            private store: StudioUsersStore
     ) { }
 
+
     /**
-     *  persist changes made to this user
+     *  save changes made to this user in mock db
      */
     saveStudioUser(): void {
         if (this.user) {
-            this.studio_users_service.updateStudioUser(this.user);
+            this.store.saveStudioUser(this.user);
         } else {
             console.log('cannot update user... user is undefined or null');
         }
     }
 
-    /**
-     *  go back to view without user detail
-     */
+
     goBack(): void {
         this.user = null;
-        this.user_detail_router.navigate(['/studio-users']);
+        this.router.navigate(['/studio-users']);
     }
-
-//    ngOnInit() {
-//        this.user_detail_route.params
-//            .switchMap((params: Params) => this.studio_users_service.getStudioUser(+params['pin']))
-//            .subscribe((user: User) => this.user = user);
-//    }
 }

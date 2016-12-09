@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { StudioUsersComponent } from './studio-users.component';
 import { UserDetailComponent } from './user-detail.component';
 
+import { StudioUsersBackendService } from './studioUsersBackend.service';
+import { StudioUsersStore } from './studioUsersStore';
+
 import { StudioUsersRoutingModule } from './studio-users-routing.module';
 
-import { StudioUsersService } from './studio-users.service';
 
 @NgModule({
     imports: [
@@ -24,7 +26,8 @@ import { StudioUsersService } from './studio-users.service';
         UserDetailComponent
     ],
     providers: [
-        StudioUsersService
+        StudioUsersBackendService,
+        StudioUsersStore
     ]
 })
 

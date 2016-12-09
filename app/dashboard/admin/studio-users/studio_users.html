@@ -16,13 +16,14 @@
             <label>Search: </label><input #user_name type="text" value="" (keyup)="searchStudioUsers(user_name.value)">
             <ul>
                     <!--                    <li *ngFor = "let result of search_results | async">bla</li> -->
-                    <li *ngFor = "let user of search_results | async" (click) = "onSelect(user)">
+                    <li *ngFor = "let user of store.studio_users | async">
                         <div><label>First Name: </label>{{user.first_name}}</div>
                         <div><label>Last Name: </label>{{user.last_name}}</div>
                         <div><label>Role: </label>{{user.role}}</div>
                         <div><label>Email: </label>{{user.email}}</div>
                         <div><label>Password: </label>****</div>
                         <div><label>Pin: </label>{{user.pin}}</div>
+                        <button (click) = "onSelect(user)">See More</button>
                         <button (click) = "deleteStudioUser(user.id)">Delete User</button>
                     </li>
             </ul>
@@ -50,4 +51,6 @@
 
 <button (click) = "goBack()">Back</button>
 
-<user_detail [user] = "selected_user">Loading user detail...</user_detail>
+<user_detail [user] = "store._selected_user.getValue()"></user_detail>
+
+
